@@ -6,7 +6,7 @@
    * [Sobre](#Sobre)
    * [API Reference ( Rotas )](#Referência-da-API)
    * [Tecnologias](#Tecnologias)
-   * [Instalação](#Instalação)
+   * [Instalação](#⚙️-Instalação)
    ### Sobre
 O projeto: o projeto listado neste repórisotro pegara os dados dos vídeos de um canal no YouTube sem pesquisa nenhuma na API, simulando o acesso de um úsuario real ( web Scraping )
 
