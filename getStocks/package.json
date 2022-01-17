@@ -1,0 +1,11 @@
+{
+  "name": "getStocks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.2",
+    "puppeteer": "^13.1.0"
+  }
+}
