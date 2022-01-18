@@ -1,47 +1,66 @@
 const express = require("express");
 const cheerio = require("cheerio");
 const puppeter = require("puppeteer");
+const axios = require("axios");
+
+log = (msg) => {
+  console.log(msg);
+};
+
+const baseURL = "https://br.investing.com/";
 
 const app = express();
 
-async function fetchFromYouTube(resp, channel) {
+// pegando a página html
+async function fetchFromYouTube() {
   const browser = await puppeter.launch();
   const page = await browser.newPage();
-  await page.goto(`https://www.youtube.com/c/${channel}/videos`);
-  resp(await page.content());
+  await page.goto(baseURL);
+  const html = await page.content();
+  return html;
   browser.close();
 }
 
-function getVideos(data) {
-  const $ = cheerio.load(data);
-  const selector = "#meta";
+async function getVideos() {
+  log("INICIANDO");
+  const response = await axios.get("https://br.investing.com/");
+  const html = response.data;
+  const $ = cheerio.load(html);
+  const selector = ".LeftLiContainer";
 
-  let videos = [];
+  let stocks = [];
 
   $(selector).each((i, element) => {
-    const a = $("h3 > a", element);
-    const title = a.text();
-    const href = a.attr("href");
+    const tr = $("td.left.bold.first.noWrap > a", element).text();
+    log(tr);
 
-    if (title && href) {
-        videos.push({
-        title,
-        link: `https://www.youtube.com${href}`,
-        });
-    }
+    // const title = tr.children("a").text();
+
+    // console.log(title);
+    // console.log(tr);
+    // const title = a.text();
+    // const href = a.attr("href");
+
+    // videos.push({
+    //   trs: tr,
+    // });
   });
-
- return videos;
+  log("FINALIZANDO");
+  return stocks;
 }
 
-app.get('/videos/:channel', (req, res) => {
-  const channelName = req.params.channel;
-  console.log(channelName);
-  fetchFromYouTube((data) => {
-    res.send(getVideos(data));
-  }, channelName);
-})
+getVideos();
 
-app.listen(3000, () => {
-  console.log("server is running on port 3000");
-});
+// getVideos(fetchFromYouTube().then((response) => console.log(response)));
+
+// app.get("/videos/:channel", (req, res) => {
+//   const channelName = req.params.channel;
+//   console.log(channelName);
+//   fetchFromYouTube((data) => {
+//     res.send(getVideos(data));
+//   }, channelName);
+// });
+
+// app.listen(3000, () => {
+//   console.log("server is running on port 3000");
+// });

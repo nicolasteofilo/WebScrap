@@ -1,9 +1,10 @@
 {
   "name": "getStocks",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "AppDynamic.js",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.25.0",
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.2",
     "puppeteer": "^13.1.0"
