@@ -1,9 +1,8 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 const cnn = "https://lite.cnn.com/en";
-const sendMail = require("./sendEmail")
+const sendMail = require("./sendEmail");
 const string = "Trump";
-
 
 function getFromCNN(resp) {
   fetch(cnn)
